@@ -1,10 +1,13 @@
+from NetworkEntity import NetworkEntity
+
 class Storage(NetworkEntity):
     """
     Class representing a storage unit.
     """ 
 
-    def __init__(self, id, space):
+    def __init__(self, id, name, space):
         self.id = id
+        self.name = name #name is used by batsim for jobs
         self.space = space
         self.cache = {}
 
@@ -15,12 +18,19 @@ class Storage(NetworkEntity):
         """
         return self.id
 
+    def getName(self):
+        """
+        Get the name of the storage space.
+        @type: string
+        """
+        return self.name
+
     def getAvailableSpace(self):
         """
         Get remaining space of this storage space in bytes.
         @return int
         """
-        availableSpace = self.getTotalSpace
+        availableSpace = self.getTotalSpace()
         
         for datasetId in self.cache:
             availableSpace -= self.cache[datasetId].getSize()
@@ -38,13 +48,11 @@ class Storage(NetworkEntity):
         """
         Add a dataset into the cache.
         @param dataset: Dataset to add.
-        @return Boolean
         """
         if dataset.getSize() <= self.getAvailableSpace():
             self.cache[dataset.getId()] = dataset
-            return True
         else:
-            return False
+            raise "Unable to add " + dataset.getId() + " dataset due to unsuficient space in storage " + self.getId() + "."
 
     def removeDataset(self, dataset):
         """

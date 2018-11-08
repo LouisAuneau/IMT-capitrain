@@ -1,0 +1,206 @@
+<?xml version='1.0'?>
+<!DOCTYPE platform SYSTEM "http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd">
+<platform version="4.1">
+  <zone id="qnode" routing="Full">
+
+    <!-- master_host is required by BatSim, speed is irrelevant here -->
+    <zone id="master_zone" routing="Full">
+      <host id="master_host" speed="42f">
+        <prop id="watt_per_state" value="0:0:0" />
+        <prop id="watt_off" value="0" />
+      </host>
+    </zone>
+    <!-- storage server, no computation is done by this host, only communication -->
+    <zone id="storage_zone" routing="Full">
+      <host id="storage_server" speed="23f">
+        <prop id="watt_per_state" value="0:0:0" />
+        <prop id="watt_off" value="0" />
+        <prop id="role" value="storage" />
+        <prop id="size_in_byte" value="536870912000" /> <!-- 500GB -->
+      </host>
+    </zone>
+
+    <zone id="qbox0" routing="Floyd">
+      <cluster id="qbox0_qrad1" prefix="qb0_qr1_qm" suffix="" radical="1-1" speed="100.0Mf, 50.0Mf, 10.0Mf, 1e-9Mf" bw="125MBps" lat="100us" core="1" router_id="qb0_qr1_router">
+        <prop id="watt_per_state" value="10.0:90.0:90.0, 10.0:60.0:60.0, 10.0:30.0:30.0, 3:3:3" />
+        <prop id="watt_off" value="0" />
+        <prop id="host_temperature" value="20.0"/>
+        <prop id="air_temperature" value="20.0"/>
+        <prop id="temperature_coeffs" value="9, 5, 0.9, 1.005, 25000, 36000"/>
+      </cluster>
+      <cluster id="qbox0_qrad2" prefix="qb0_qr2_qm" suffix="" radical="1-1" speed="100.0Mf, 50.0Mf, 10.0Mf, 1e-9Mf" bw="125MBps" lat="100us" core="1" router_id="qb0_qr2_router">
+        <prop id="watt_per_state" value="10.0:90.0:90.0, 10.0:60.0:60.0, 10.0:30.0:30.0, 3:3:3" />
+        <prop id="watt_off" value="0" />
+        <prop id="host_temperature" value="20.0"/>
+        <prop id="air_temperature" value="20.0"/>
+        <prop id="temperature_coeffs" value="9, 5, 0.9, 1.005, 25000, 36000"/>
+      </cluster>
+      <cluster id="qbox0_qrad3" prefix="qb0_qr3_qm" suffix="" radical="1-1" speed="100.0Mf, 50.0Mf, 10.0Mf, 1e-9Mf" bw="125MBps" lat="100us" core="1" router_id="qb0_qr3_router">
+        <prop id="watt_per_state" value="10.0:90.0:90.0, 10.0:60.0:60.0, 10.0:30.0:30.0, 3:3:3" />
+        <prop id="watt_off" value="0" />
+        <prop id="host_temperature" value="20.0"/>
+        <prop id="air_temperature" value="20.0"/>
+        <prop id="temperature_coeffs" value="9, 5, 0.9, 1.005, 25000, 36000"/>
+      </cluster>
+      <cluster id="qbox0_qrad4" prefix="qb0_qr4_qm" suffix="" radical="1-1" speed="100.0Mf, 50.0Mf, 10.0Mf, 1e-9Mf" bw="125MBps" lat="100us" core="1" router_id="qb0_qr4_router">
+        <prop id="watt_per_state" value="10.0:90.0:90.0, 10.0:60.0:60.0, 10.0:30.0:30.0, 3:3:3" />
+        <prop id="watt_off" value="0" />
+        <prop id="host_temperature" value="20.0"/>
+        <prop id="air_temperature" value="20.0"/>
+        <prop id="temperature_coeffs" value="9, 5, 0.9, 1.005, 25000, 36000"/>
+      </cluster>
+
+      <zone id="qb0_disk_zone" routing="Full">
+        <host id="qb0_disk" speed="0f">
+          <prop id="watt_per_state" value="0:0:0"/>
+          <prop id="watt_off" value="0"/>
+          <prop id="role" value="storage"/>
+          <prop id="size_in_byte" value="107374182400" /> <!-- 100GB -->
+        </host>
+        <router id="qb0_router"/>
+      </zone>
+
+      <link id="qb0_lan_link" bandwidth="125MBps" latency="100us" sharing_policy="FATPIPE"/>
+
+      <!-- Links b/w QRads and the QBox -->
+      <zoneRoute src="qb0_disk_zone" dst="qbox0_qrad1" gw_src="qb0_router" gw_dst="qb0_qr1_router">
+        <link_ctn id="qb0_lan_link"/>
+      </zoneRoute>
+      <zoneRoute src="qb0_disk_zone" dst="qbox0_qrad2" gw_src="qb0_router" gw_dst="qb0_qr2_router">
+        <link_ctn id="qb0_lan_link"/>
+      </zoneRoute>
+      <zoneRoute src="qb0_disk_zone" dst="qbox0_qrad3" gw_src="qb0_router" gw_dst="qb0_qr3_router">
+        <link_ctn id="qb0_lan_link"/>
+      </zoneRoute>
+      <zoneRoute src="qb0_disk_zone" dst="qbox0_qrad4" gw_src="qb0_router" gw_dst="qb0_qr4_router">
+        <link_ctn id="qb0_lan_link"/>
+      </zoneRoute>
+    </zone>
+
+    <zone id="qbox1" routing="Floyd">
+      <cluster id="qbox1_qrad1" prefix="qb1_qr1_qm" suffix="" radical="1-1" speed="100.0Mf, 50.0Mf, 10.0Mf, 1e-9Mf" bw="125MBps" lat="100us" core="1" router_id="qb1_qr1_router">
+        <prop id="watt_per_state" value="10.0:90.0:90.0, 10.0:60.0:60.0, 10.0:30.0:30.0, 3:3:3" />
+        <prop id="watt_off" value="0" />
+        <prop id="host_temperature" value="20.0"/>
+        <prop id="air_temperature" value="20.0"/>
+        <prop id="temperature_coeffs" value="9, 5, 0.9, 1.005, 25000, 36000"/>
+      </cluster>
+      <cluster id="qbox1_qrad2" prefix="qb1_qr2_qm" suffix="" radical="1-1" speed="100.0Mf, 50.0Mf, 10.0Mf, 1e-9Mf" bw="125MBps" lat="100us" core="1" router_id="qb1_qr2_router">
+        <prop id="watt_per_state" value="10.0:90.0:90.0, 10.0:60.0:60.0, 10.0:30.0:30.0, 3:3:3" />
+        <prop id="watt_off" value="0" />
+        <prop id="host_temperature" value="20.0"/>
+        <prop id="air_temperature" value="20.0"/>
+        <prop id="temperature_coeffs" value="9, 5, 0.9, 1.005, 25000, 36000"/>
+      </cluster>
+      <cluster id="qbox1_qrad3" prefix="qb1_qr3_qm" suffix="" radical="1-1" speed="100.0Mf, 50.0Mf, 10.0Mf, 1e-9Mf" bw="125MBps" lat="100us" core="1" router_id="qb1_qr3_router">
+        <prop id="watt_per_state" value="10.0:90.0:90.0, 10.0:60.0:60.0, 10.0:30.0:30.0, 3:3:3" />
+        <prop id="watt_off" value="0" />
+        <prop id="host_temperature" value="20.0"/>
+        <prop id="air_temperature" value="20.0"/>
+        <prop id="temperature_coeffs" value="9, 5, 0.9, 1.005, 25000, 36000"/>
+      </cluster>
+      <cluster id="qbox1_qrad4" prefix="qb1_qr4_qm" suffix="" radical="1-1" speed="100.0Mf, 50.0Mf, 10.0Mf, 1e-9Mf" bw="125MBps" lat="100us" core="1" router_id="qb1_qr4_router">
+        <prop id="watt_per_state" value="10.0:90.0:90.0, 10.0:60.0:60.0, 10.0:30.0:30.0, 3:3:3" />
+        <prop id="watt_off" value="0" />
+        <prop id="host_temperature" value="20.0"/>
+        <prop id="air_temperature" value="20.0"/>
+        <prop id="temperature_coeffs" value="9, 5, 0.9, 1.005, 25000, 36000"/>
+      </cluster>
+      <cluster id="qbox1_qrad5" prefix="qb1_qr5_qm" suffix="" radical="1-1" speed="100.0Mf, 50.0Mf, 10.0Mf, 1e-9Mf" bw="125MBps" lat="100us" core="1" router_id="qb1_qr5_router">
+        <prop id="watt_per_state" value="10.0:90.0:90.0, 10.0:60.0:60.0, 10.0:30.0:30.0, 3:3:3" />
+        <prop id="watt_off" value="0" />
+        <prop id="host_temperature" value="20.0"/>
+        <prop id="air_temperature" value="20.0"/>
+        <prop id="temperature_coeffs" value="9, 5, 0.9, 1.005, 25000, 36000"/>
+      </cluster>
+      <cluster id="qbox1_qrad6" prefix="qb1_qr6_qm" suffix="" radical="1-1" speed="100.0Mf, 50.0Mf, 10.0Mf, 1e-9Mf" bw="125MBps" lat="100us" core="1" router_id="qb1_qr6_router">
+        <prop id="watt_per_state" value="10.0:90.0:90.0, 10.0:60.0:60.0, 10.0:30.0:30.0, 3:3:3" />
+        <prop id="watt_off" value="0" />
+        <prop id="host_temperature" value="20.0"/>
+        <prop id="air_temperature" value="20.0"/>
+        <prop id="temperature_coeffs" value="9, 5, 0.9, 1.005, 25000, 36000"/>
+      </cluster>
+      <cluster id="qbox1_qrad7" prefix="qb1_qr7_qm" suffix="" radical="1-1" speed="100.0Mf, 50.0Mf, 10.0Mf, 1e-9Mf" bw="125MBps" lat="100us" core="1" router_id="qb1_qr7_router">
+        <prop id="watt_per_state" value="10.0:90.0:90.0, 10.0:60.0:60.0, 10.0:30.0:30.0, 3:3:3" />
+        <prop id="watt_off" value="0" />
+        <prop id="host_temperature" value="20.0"/>
+        <prop id="air_temperature" value="20.0"/>
+        <prop id="temperature_coeffs" value="9, 5, 0.9, 1.005, 25000, 36000"/>
+      </cluster>
+      <cluster id="qbox1_qrad8" prefix="qb1_qr8_qm" suffix="" radical="1-1" speed="100.0Mf, 50.0Mf, 10.0Mf, 1e-9Mf" bw="125MBps" lat="100us" core="1" router_id="qb1_qr8_router">
+        <prop id="watt_per_state" value="10.0:90.0:90.0, 10.0:60.0:60.0, 10.0:30.0:30.0, 3:3:3" />
+        <prop id="watt_off" value="0" />
+        <prop id="host_temperature" value="20.0"/>
+        <prop id="air_temperature" value="20.0"/>
+        <prop id="temperature_coeffs" value="9, 5, 0.9, 1.005, 25000, 36000"/>
+      </cluster>
+
+      <zone id="qb1_disk_zone" routing="Full">
+        <host id="qb1_disk" speed="0f">
+          <prop id="watt_per_state" value="0:0:0"/>
+          <prop id="watt_off" value="0"/>
+          <prop id="role" value="storage"/>
+          <prop id="size_in_byte" value="107374182400" /> <!-- 100GB -->
+        </host>
+        <router id="qb1_router"/>
+      </zone>
+
+      <link id="qb1_lan_link" bandwidth="125MBps" latency="100us" sharing_policy="FATPIPE"/>
+
+      <!-- Links b/w QRads and the QBox -->
+      <zoneRoute src="qb1_disk_zone" dst="qbox1_qrad1" gw_src="qb1_router" gw_dst="qb1_qr1_router">
+        <link_ctn id="qb1_lan_link"/>
+      </zoneRoute>
+      <zoneRoute src="qb1_disk_zone" dst="qbox1_qrad2" gw_src="qb1_router" gw_dst="qb1_qr2_router">
+        <link_ctn id="qb1_lan_link"/>
+      </zoneRoute>
+      <zoneRoute src="qb1_disk_zone" dst="qbox1_qrad3" gw_src="qb1_router" gw_dst="qb1_qr3_router">
+        <link_ctn id="qb1_lan_link"/>
+      </zoneRoute>
+      <zoneRoute src="qb1_disk_zone" dst="qbox1_qrad4" gw_src="qb1_router" gw_dst="qb1_qr4_router">
+        <link_ctn id="qb1_lan_link"/>
+      </zoneRoute>
+      <zoneRoute src="qb1_disk_zone" dst="qbox1_qrad5" gw_src="qb1_router" gw_dst="qb1_qr5_router">
+        <link_ctn id="qb1_lan_link"/>
+      </zoneRoute>
+      <zoneRoute src="qb1_disk_zone" dst="qbox1_qrad6" gw_src="qb1_router" gw_dst="qb1_qr6_router">
+        <link_ctn id="qb1_lan_link"/>
+      </zoneRoute>
+      <zoneRoute src="qb1_disk_zone" dst="qbox1_qrad7" gw_src="qb1_router" gw_dst="qb1_qr7_router">
+        <link_ctn id="qb1_lan_link"/>
+      </zoneRoute>
+      <zoneRoute src="qb1_disk_zone" dst="qbox1_qrad8" gw_src="qb1_router" gw_dst="qb1_qr8_router">
+        <link_ctn id="qb1_lan_link"/>
+      </zoneRoute>
+    </zone>
+
+    <link id="master_link" bandwidth="1000GBps" latency="1us" sharing_policy="FATPIPE"/>
+
+    <!-- Internet links between the QBoxes and the storage server -->
+    <link id="qb0_wan_link" bandwidth="20MBps" latency="10ms" sharing_policy="SPLITDUPLEX"/>
+    <link id="qb1_wan_link" bandwidth="20MBps" latency="10ms" sharing_policy="SPLITDUPLEX"/>
+
+    <zoneRoute src="storage_zone" dst="qbox0" gw_src="storage_server" gw_dst="qb0_router" symmetrical="NO">
+      <link_ctn id="qb0_wan_link" direction="DOWN" />
+    </zoneRoute>
+    <zoneRoute src="qbox0" dst="storage_zone" gw_src="qb0_router" gw_dst="storage_server" symmetrical="NO">
+      <link_ctn id="qb0_wan_link" direction="UP" />
+    </zoneRoute>
+
+    <zoneRoute src="storage_zone" dst="qbox1" gw_src="storage_server" gw_dst="qb1_router" symmetrical="NO">
+      <link_ctn id="qb1_wan_link" direction="DOWN" />
+    </zoneRoute>
+    <zoneRoute src="qbox1" dst="storage_zone" gw_src="qb1_router" gw_dst="storage_server" symmetrical="NO">
+      <link_ctn id="qb1_wan_link" direction="UP" />
+    </zoneRoute>
+
+
+    <!-- Dummy links to Batsim's master_host -->
+    <zoneRoute src="master_zone" dst="qbox0" gw_src="master_host" gw_dst="qb0_router">
+      <link_ctn id="master_link"/>
+    </zoneRoute>
+    <zoneRoute src="master_zone" dst="qbox1" gw_src="master_host" gw_dst="qb1_router">
+      <link_ctn id="master_link"/>
+    </zoneRoute>
+  </zone>
+</platform>

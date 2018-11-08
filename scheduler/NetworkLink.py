@@ -1,3 +1,5 @@
+import NetworkEntity
+
 class NetworkLink(NetworkEntity):
     """
     Class representing a network link, which is absically an internet connection between a router or a storage entity.
