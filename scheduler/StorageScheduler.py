@@ -47,5 +47,5 @@ class StorageScheduler(BatsimScheduler):
         mainStorage.storeDataset(dataset)
 
         # Moving the dataset and notify on finish
-        self.storageController.doDataTransfer(dataset, mainStorage, qBox1Storage)
+        self.storageController.doDataTransfer(dataset, mainStorage, [qBox1Storage])
         self.bs.notify_submission_finished()

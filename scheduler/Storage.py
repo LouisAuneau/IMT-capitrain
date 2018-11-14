@@ -1,4 +1,5 @@
 from NetworkEntity import NetworkEntity
+from DatasetContainer import DatasetContainer
 
 class Storage(NetworkEntity):
     """
@@ -9,7 +10,7 @@ class Storage(NetworkEntity):
         self.id = id
         self.name = name #name is used by batsim for jobs
         self.space = space
-        self.cache = {}
+        self.store = {} #a map of DatasetContainer by dataset id
 
     def getId(self):
         """
@@ -25,6 +26,13 @@ class Storage(NetworkEntity):
         """
         return self.name
 
+    def getStore(self):
+        """
+        Get the store of dataset containers indexed by dataset id.
+        @type: dictionary
+        """
+        return self.store
+
     def getAvailableSpace(self):
         """
         Get remaining space of this storage space in bytes.
@@ -32,8 +40,8 @@ class Storage(NetworkEntity):
         """
         availableSpace = self.getTotalSpace()
         
-        for datasetId in self.cache:
-            availableSpace -= self.cache[datasetId].getSize()
+        for datasetId in self.store:
+            availableSpace -= self.store[datasetId].getDataset().getSize()
 
         return availableSpace
 
@@ -46,25 +54,25 @@ class Storage(NetworkEntity):
 
     def storeDataset(self, dataset):
         """
-        Add a dataset into the cache.
+        Add a dataset into the store.
         @param dataset: Dataset to add.
         """
         if dataset.getSize() <= self.getAvailableSpace():
-            self.cache[dataset.getId()] = dataset
+            self.store[dataset.getId()] = DatasetContainer(dataset)
         else:
-            raise "Unable to add " + dataset.getId() + " dataset due to unsuficient space in storage " + self.getId() + "."
+            raise "Unable to add " + dataset.getId() + " dataset due to unsuficient space in the storage " + self.getId() + "."
 
     def removeDataset(self, dataset):
         """
-        Remove a dataset from the cache.
+        Remove a dataset from the store.
         @param dataset: Dataset to remove.
         """
-        del self.cache[dataset.getId()]
+        del self.store[dataset.getId()]
 
     def isDatasetPresent(self, dataset):
         """
-        Tell if a dataset is present in the cache of this storage space.
+        Tell if a dataset is present in the store of this storage space.
         @return Boolean
         """
-        return (dataset.getId() in self.cache)
+        return (dataset.getId() in self.store)
             
