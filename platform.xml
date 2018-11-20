@@ -176,7 +176,7 @@
 
     <link id="master_link" bandwidth="1000GBps" latency="1us" sharing_policy="FATPIPE"/>
 
-    <!-- Internet links between the QBoxes and the storage server -->
+    <!-- Internet links between the QBoxes and the Storage server -->
     <link id="qb0_wan_link" bandwidth="20MBps" latency="10ms" sharing_policy="SPLITDUPLEX"/>
     <link id="qb1_wan_link" bandwidth="20MBps" latency="10ms" sharing_policy="SPLITDUPLEX"/>
 
@@ -193,6 +193,14 @@
     <zoneRoute src="qbox1" dst="storage_zone" gw_src="qb1_router" gw_dst="storage_server" symmetrical="NO">
       <link_ctn id="qb1_wan_link" direction="UP" />
     </zoneRoute>
+    
+    <zoneRoute src="qbox0" dst="qbox1" gw_src="qb0_router" gw_dst="qb1_router" symmetrical="NO">
+      <link_ctn id="qb0_wan_link" direction="DOWN"/>
+    </zoneRoute>
+
+    <zoneRoute src="qbox1" dst="qbox0" gw_src="qb1_router" gw_dst="qb0_router" symmetrical="NO">
+      <link_ctn id="qb1_wan_link" direction="UP"/>
+    </zoneRoute>
 
 
     <!-- Dummy links to Batsim's master_host -->
@@ -200,6 +208,9 @@
       <link_ctn id="master_link"/>
     </zoneRoute>
     <zoneRoute src="master_zone" dst="qbox1" gw_src="master_host" gw_dst="qb1_router">
+      <link_ctn id="master_link"/>
+    </zoneRoute>
+    <zoneRoute src="master_zone" dst="storage_zone" gw_src="master_host" gw_dst="storage_server">
       <link_ctn id="master_link"/>
     </zoneRoute>
   </zone>

@@ -47,7 +47,6 @@ class StorageController:
                 freedSpace = 0
                 while freedSpace >= dataset.getSize() and len(containers) > 0:
                     datset = containers[0].getDataset()
-                    # TODO: Tell to batsim to remove the dataset with the right profile
                     destination.removeDataset(dataset)
                     freedSpace += dataset.getSize()
                     containers.pop(0)
@@ -56,7 +55,7 @@ class StorageController:
                     raise "Cannot free enough space on storage " + destination.getId() + "."
 
             # Batsim profile definition and execution
-            profile_name = "data_transfer"
+            profile_name = "data_transfer" + str(self.dataTransfersCount)
             transfer_profile = {
                 profile_name : 
                 {
@@ -78,9 +77,10 @@ class StorageController:
             job.storage_mapping[destination.getName()] = destination.getId()
             self.batsim.execute_jobs([job])
 
-            # Doing the datatransfer in our abstraction
+            # Doing the datatransfer in our abstraction and saving state in log
             destination.storeDataset(dataset)
-
+            self.logLoad(jobId)
+        
         self.dataTransfersCount += 1
 
     def registerStorageSpace(self, storageSpace):
@@ -89,6 +89,7 @@ class StorageController:
         @param storageSpace: Storage
         """
         self.storageSpaces[storageSpace.getId()] = storageSpace
+        print(self.storageSpaces)
 
     def getStorageSpace(self, id):
         """
@@ -100,7 +101,7 @@ class StorageController:
         if id in self.storageSpaces:
             return self.storageSpaces[id]
         else:
-            raise "Storage " + id + " not found in the controller."
+            raise "Storage " + str(id) + " not found in the controller."
 
     def unregisterStorageSpace(self, storageSpace):
         """
@@ -108,3 +109,35 @@ class StorageController:
         @param storageSpace: Storage
         """
         del self.storageSpaces[storageSpace]
+
+    def logLoad(self, jobId, time = None):
+        """
+        Logs storage space for all storage machine at a given time.
+        @param jobId: int
+        @param time: float|None
+        """
+        for id in self.storageSpaces:
+            storageSpace = self.storageSpaces[id]
+            
+            if time is not None:
+                storageSpace.updateLog(jobId, time)
+            else:
+                storageSpace.updateLog(jobId)
+
+    def exportLoadLog(self):
+        """
+        Export machine logs as a ready to export dict.  
+        """
+        json = {}
+
+        for storageSpaceId in self.storageSpaces:
+            storageSpace = self.storageSpaces[storageSpaceId]
+
+            # Get timeline only once
+            if "time" not in json:
+                json["time"] = list(storageSpace.loadLog.keys())
+
+            # Get load
+            json[storageSpace.getName()] = list(storageSpace.loadLog.values())
+
+        return json
