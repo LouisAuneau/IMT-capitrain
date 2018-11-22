@@ -27,11 +27,11 @@ for storageSpace, load in loads.items():
 # Generating graph for each storage space
 for storageSpace, load in loads.items():
     subplots[current_plot].set_title(storageSpace)
-    subplots[current_plot].set_xlabel("time in ms")
     subplots[current_plot].set_ylabel("load in bytes")
     subplots[current_plot].set_ylim(min_size, max_size)
     subplots[current_plot].bar(index, load, align="edge", width=1)
     current_plot += 1
 
 plt.xticks(index, x_axis)
+plt.xlabel("time in ms")
 plt.show()

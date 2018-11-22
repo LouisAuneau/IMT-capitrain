@@ -1,0 +1,10 @@
+{
+  "job_submission": {
+    "forward_profiles": false,
+    "from_scheduler": {
+      "enabled": true,
+      "acknowledge": false
+    }
+  }
+}
+
