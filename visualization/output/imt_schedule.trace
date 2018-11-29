@@ -122,23 +122,35 @@
 6 0.000000 machine_state m13 w
 6 0.000000 machine_state m14 w
 5 jdyn!0 machine_state "dyn!0" "0.000000 0.812500 1.000000"
-6 1000.000060 machine_state m13 jdyn!0
-6 6368.719180 machine_state m13 w
+6 1000.000060 machine_state m14 jdyn!0
+5 jdyn!1 machine_state "dyn!1" "1.000000 0.000000 0.000000"
+6 1161.070681 machine_state m14 jdyn!1
+5 jdyn!2 machine_state "dyn!2" "1.000000 0.750000 0.000000"
+6 4221.235185 machine_state m14 jdyn!2
+5 jdyn!3 machine_state "dyn!3" "0.593750 0.000000 1.000000"
+6 9589.944530 machine_state m14 jdyn!3
+5 jdyn!4 machine_state "dyn!4" "0.000000 1.000000 0.062500"
+6 9589.944621 machine_state m14 jdyn!4
+5 jdyn!5 machine_state "dyn!5" "0.687500 0.000000 1.000000"
+6 9589.944666 machine_state m14 jdyn!5
+5 jdyn!6 machine_state "dyn!6" "0.968750 1.000000 0.000000"
+6 9589.944688 machine_state m14 jdyn!6
+6 9589.944697 machine_state m14 w
 
 # End of events, containers destruction
-3 6368.719196 m0 machine_ct
-3 6368.719196 m1 machine_ct
-3 6368.719196 m2 machine_ct
-3 6368.719196 m3 machine_ct
-3 6368.719196 m4 machine_ct
-3 6368.719196 m5 machine_ct
-3 6368.719196 m6 machine_ct
-3 6368.719196 m7 machine_ct
-3 6368.719196 m8 machine_ct
-3 6368.719196 m9 machine_ct
-3 6368.719196 m10 machine_ct
-3 6368.719196 m11 machine_ct
-3 6368.719196 m12 machine_ct
-3 6368.719196 m13 machine_ct
-3 6368.719196 m14 machine_ct
-3 6368.719196 root root_ct
+3 9589.944713 m0 machine_ct
+3 9589.944713 m1 machine_ct
+3 9589.944713 m2 machine_ct
+3 9589.944713 m3 machine_ct
+3 9589.944713 m4 machine_ct
+3 9589.944713 m5 machine_ct
+3 9589.944713 m6 machine_ct
+3 9589.944713 m7 machine_ct
+3 9589.944713 m8 machine_ct
+3 9589.944713 m9 machine_ct
+3 9589.944713 m10 machine_ct
+3 9589.944713 m11 machine_ct
+3 9589.944713 m12 machine_ct
+3 9589.944713 m13 machine_ct
+3 9589.944713 m14 machine_ct
+3 9589.944713 root root_ct

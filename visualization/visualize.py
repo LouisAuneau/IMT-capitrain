@@ -7,7 +7,7 @@ js = JobSet.from_csv("../visualization/output/imt_jobs.csv")
 js.plot(with_details=True)
 
 #Loading spaces load log.
-with open('../visualization/output/storages_load.json') as f:
+with open('../visualization/output/imt_storages_load.json') as f:
     loads = json.load(f)
 
 x_axis = loads["time"]

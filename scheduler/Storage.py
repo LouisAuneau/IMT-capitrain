@@ -87,6 +87,11 @@ class Storage(NetworkEntity):
         if time is None:
             self.loadLog[jobId] = self.getTotalSpace() - self.getAvailableSpace()
         else:
-            self.loadLog[time] = self.loadLog[jobId]
-            del self.loadLog[jobId]
+            if jobId in self.loadLog:
+                self.loadLog[float(time)] = self.loadLog[jobId]
+                del self.loadLog[jobId]
+            else:
+                times = [e for e in list(self.loadLog.keys()) if isinstance(e, float) or isinstance(e, int)]
+                target = max([e for e in times if e < time])
+                self.loadLog[time] = self.loadLog[target]
             

@@ -58,7 +58,7 @@ class StorageController:
                     containers.pop(0)
 
                 if freedSpace < dataset.getSize():
-                    raise RuntimeError("Cannot free enough space on storage " + str(destination.getId()) + ".")
+                    raise RuntimeError("Cannot free enough space on storage " + str(destination.getName()) + ".")
 
             # Batsim profile definition and execution
             profile_name = "data_transfer" + str(self.dataTransfersCount)
@@ -85,7 +85,8 @@ class StorageController:
 
             # Doing the datatransfer in our abstraction and saving state in log
             destination.storeDataset(dataset)
-            self.logLoad(jobId)
+            self.logLoad(jobId, storage = origin)
+            self.logLoad(jobId, storage = destination)
         
         self.dataTransfersCount += 1
 
@@ -116,7 +117,7 @@ class StorageController:
         """
         del self.storageSpaces[storageSpace]
 
-    def logLoad(self, jobId, time = None):
+    def logLoad(self, jobId, time = None, storage = None):
         """
         Logs storage space for all storage machine at a given time.
         @param jobId: int
@@ -128,7 +129,8 @@ class StorageController:
             if time is not None:
                 storageSpace.updateLog(jobId, time)
             else:
-                storageSpace.updateLog(jobId)
+                if storage.getId() == storageSpace.getId():
+                    storageSpace.updateLog(jobId)
 
     def exportLoadLog(self):
         """

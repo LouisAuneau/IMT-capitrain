@@ -38,7 +38,7 @@ class StorageScheduler(BatsimScheduler):
 
     def onSimulationEnds(self):
         # Exporting the load from machines into a csv
-        with open('storages_load.json', 'w') as fp:
+        with open('imt_storages_load.json', 'w') as fp:
             json.dump(self.storageController.exportLoadLog(), fp)
 
         return super()
@@ -81,16 +81,18 @@ class StorageScheduler(BatsimScheduler):
 
         self.storageController.doDataTransfer(dataset2, mainStorage, [qBox2Storage])
 
-        self.storageController.doDataTransfer(dataset3, mainStorage, [qBox1Storage])
         self.storageController.doDataTransfer(dataset3, mainStorage, [qBox2Storage])
 
         self.storageController.doDataTransfer(dataset4, mainStorage, [qBox2Storage])
 
         self.storageController.doDataTransfer(dataset5, mainStorage, [qBox2Storage])
 
-        self.storageController.doDataTransfer(dataset6, mainStorage, [qBox1Storage])
         self.storageController.doDataTransfer(dataset6, mainStorage, [qBox2Storage])
 
         self.storageController.doDataTransfer(dataset7, mainStorage, [qBox2Storage])
+
+        self.storageController.doDataTransfer(dataset6, mainStorage, [qBox1Storage])
+
+        self.storageController.doDataTransfer(dataset7, mainStorage, [qBox1Storage])
 
         self.bs.notify_submission_finished()
