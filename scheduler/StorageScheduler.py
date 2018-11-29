@@ -61,10 +61,36 @@ class StorageScheduler(BatsimScheduler):
         # Creating and storing a dataset as initialization
         dataset1 = Dataset(1, ONE_GIGA_BYTE)
         dataset2 = Dataset(2, ONE_GIGA_BYTE*10)
+        dataset3 = Dataset(3, ONE_GIGA_BYTE*30)
+        dataset4 = Dataset(4, ONE_GIGA_BYTE*30)
+        dataset5 = Dataset(5, ONE_GIGA_BYTE*30)
+        dataset6 = Dataset(6, ONE_GIGA_BYTE*30)
+        dataset7 = Dataset(7, ONE_GIGA_BYTE*30)
+        dataset8 = Dataset(8, ONE_GIGA_BYTE*30)
         mainStorage.storeDataset(dataset1)
         mainStorage.storeDataset(dataset2)
+        mainStorage.storeDataset(dataset3)
+        mainStorage.storeDataset(dataset4)
+        mainStorage.storeDataset(dataset5)
+        mainStorage.storeDataset(dataset6)
+        mainStorage.storeDataset(dataset7)
+        mainStorage.storeDataset(dataset8)
 
         # Moving the dataset and notify on finish
         self.storageController.doDataTransfer(dataset1, mainStorage, [qBox1Storage])
+
         self.storageController.doDataTransfer(dataset2, mainStorage, [qBox2Storage])
+
+        self.storageController.doDataTransfer(dataset3, mainStorage, [qBox1Storage])
+        self.storageController.doDataTransfer(dataset3, mainStorage, [qBox2Storage])
+
+        self.storageController.doDataTransfer(dataset4, mainStorage, [qBox2Storage])
+
+        self.storageController.doDataTransfer(dataset5, mainStorage, [qBox2Storage])
+
+        self.storageController.doDataTransfer(dataset6, mainStorage, [qBox1Storage])
+        self.storageController.doDataTransfer(dataset6, mainStorage, [qBox2Storage])
+
+        self.storageController.doDataTransfer(dataset7, mainStorage, [qBox2Storage])
+
         self.bs.notify_submission_finished()

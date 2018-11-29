@@ -31,7 +31,7 @@ git clone https://github.com/LouisAuneau/IMT-capitrain.git
 To start our scheduler with pybatsim, first you have to start _batsim_ from our repository's folder:
 
 ```bash
-batsim -p platform.xml -e visualization/out/imt --config_file batsim_config.txt --allow-time-sharing
+batsim -p platform.xml -e imt --config-file batsim_config.txt --allow-time-sharing
 ```
 
 Then start pybatsim from its directory :
@@ -42,8 +42,12 @@ python3 launcher.py {absolute_path_to_our_repo}/scheduler/StorageScheduler.py
 
 ## Visualize simulation results
 
-To visualize data from the the simulation, go to the vizualisation directory and type:
+To visualize data from the the simulation, first, in our repository, type :
+```bash
+mv ./imt_* ./visualization/output
+``` 
 
+Then go to the vizualisation directory and type:
 ```bash
 python3 visualyze.py
 ```
@@ -66,5 +70,5 @@ It shows 4 graphs :
 ## Todos
 
 - In the ON_SIMULATION_BEGINS callback, get the links between all entities to draw a network graph showing all throughputs.
-
+- In the storage controller, use a geneitc algorithm or djikstra algotihm (to be determined depending on the performence of each), to find the fatest way to move a dataset in the network.
 - Write unit tests
