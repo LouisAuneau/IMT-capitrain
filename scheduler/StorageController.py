@@ -39,9 +39,11 @@ class StorageController:
             if availableSpace < dataset.getSize():
                 # Applying here a LRU policy if not enough space
                 containers = []
-                for datasetContainer in destination.getStore():
-                    containers.append(datasetContainer)
+                stores = destination.getStore()
+                for storeId in stores:
+                    containers.append(stores[storeId])
 
+                print(containers)
                 containers.sort(key=lambda c: c.getCreationTime(), reverse=True)
 
                 freedSpace = 0
@@ -52,7 +54,7 @@ class StorageController:
                     containers.pop(0)
 
                 if freedSpace < dataset.getSize():
-                    raise "Cannot free enough space on storage " + destination.getId() + "."
+                    raise Error("Cannot free enough space on storage " + str(destination.getId()) + ".")
 
             # Batsim profile definition and execution
             profile_name = "data_transfer" + str(self.dataTransfersCount)
