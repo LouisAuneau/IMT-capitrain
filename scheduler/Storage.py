@@ -61,7 +61,7 @@ class Storage(NetworkEntity):
         if dataset.getSize() <= self.getAvailableSpace():
             self.store[dataset.getId()] = DatasetContainer(dataset)
         else:
-            raise "Unable to add " + dataset.getId() + " dataset due to unsuficient space in the storage " + self.getId() + "."
+            raise Exception("Unable to add " + dataset.getId() + " dataset due to unsuficient space in the storage " + self.getId() + ".")
 
     def removeDataset(self, dataset):
         """

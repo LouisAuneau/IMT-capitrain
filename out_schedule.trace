@@ -1,0 +1,158 @@
+%EventDef PajeDefineContainerType 1
+% Type string
+% Alias string
+% Name string
+%EndEventDef
+
+%EventDef PajeCreateContainer 2
+% Time date 
+% Type string  
+% Alias string 
+% Name string   
+% Container string  
+%EndEventDef
+
+%EventDef PajeDestroyContainer 3
+% Time date
+% Name string 
+% Type string
+%EndEventDef
+
+%EventDef PajeDefineStateType 4
+% Alias string 
+% Type string 
+% Name string 
+%EndEventDef
+
+%EventDef PajeDefineEntityValue 5
+% Alias string  
+% Type string  
+% Name string  
+% Color color 
+%EndEventDef
+
+%EventDef PajeSetState 6
+% Time date  
+% Type string  
+% Container string  
+% Value string  
+%EndEventDef 
+
+%EventDef PajeDefineEventType 7
+% Type string
+% Alias string
+% Name string
+%EndEventDef
+
+%EventDef PajeNewEvent 8
+% Time date
+% Type string
+% Container string
+% Value string
+%EndEventDef
+
+%EventDef PajeDefineVariableType 9
+% Type string
+% Alias string
+% Name string
+% Color string
+%EndEventDef
+
+%EventDef PajeSetVariable 10
+% Time date
+% Type string
+% Container string
+% Value double
+%EndEventDef
+
+# Container types creation
+1 0 root_ct "Machines"
+1 root_ct machine_ct "Machine"
+1 0 scheduler_ct "Scheduler"
+1 scheduler_ct killer_ct "Killer"
+
+# Event types creation
+7 killer_ct kk "Job kill"
+7 machine_ct km "Job kill"
+
+# Variable types creation
+9 scheduler_ct vu_vt "Utilization" "0.0 0.5 0.0"
+
+# Containers creation
+2 0.000000 root_ct root "Machines" 0
+2 0.000000 machine_ct m0 "qb0_qr1_qm1" root
+2 0.000000 machine_ct m1 "qb0_qr2_qm1" root
+2 0.000000 machine_ct m2 "qb0_qr3_qm1" root
+2 0.000000 machine_ct m3 "qb0_qr4_qm1" root
+2 0.000000 machine_ct m4 "qb1_qr1_qm1" root
+2 0.000000 machine_ct m5 "qb1_qr2_qm1" root
+2 0.000000 machine_ct m6 "qb1_qr3_qm1" root
+2 0.000000 machine_ct m7 "qb1_qr4_qm1" root
+2 0.000000 machine_ct m8 "qb1_qr5_qm1" root
+2 0.000000 machine_ct m9 "qb1_qr6_qm1" root
+2 0.000000 machine_ct m10 "qb1_qr7_qm1" root
+2 0.000000 machine_ct m11 "qb1_qr8_qm1" root
+2 0.000000 machine_ct m12 "qb0_disk" root
+2 0.000000 machine_ct m13 "qb1_disk" root
+2 0.000000 machine_ct m14 "storage_server" root
+2 0.000000 scheduler_ct sc "Scheduler" 0
+2 0.000000 killer_ct k "Killer" sc
+
+# States creation
+4 machine_state machine_ct "Machine state"
+
+# Creation of the different values the machine state can be
+5 w machine_state "Waiting" "0.0 0.0 0.0"
+5 l machine_state "Launching" "0.3 0.3 0.3"
+
+# Begin of events
+6 0.000000 machine_state m0 w
+6 0.000000 machine_state m1 w
+6 0.000000 machine_state m2 w
+6 0.000000 machine_state m3 w
+6 0.000000 machine_state m4 w
+6 0.000000 machine_state m5 w
+6 0.000000 machine_state m6 w
+6 0.000000 machine_state m7 w
+6 0.000000 machine_state m8 w
+6 0.000000 machine_state m9 w
+6 0.000000 machine_state m10 w
+6 0.000000 machine_state m11 w
+6 0.000000 machine_state m12 w
+6 0.000000 machine_state m13 w
+6 0.000000 machine_state m14 w
+5 jdyn!0 machine_state "dyn!0" "0.000000 0.812500 1.000000"
+6 1000.000060 machine_state m14 jdyn!0
+5 jdyn!1 machine_state "dyn!1" "1.000000 0.000000 0.000000"
+6 1161.071064 machine_state m14 jdyn!1
+5 jdyn!2 machine_state "dyn!2" "1.000000 0.750000 0.000000"
+6 4221.234938 machine_state m14 jdyn!2
+5 jdyn!3 machine_state "dyn!3" "0.593750 0.000000 1.000000"
+6 4274.922533 machine_state m14 jdyn!3
+5 jdyn!4 machine_state "dyn!4" "0.000000 1.000000 0.062500"
+6 9589.944508 machine_state m14 jdyn!4
+5 jdyn!5 machine_state "dyn!5" "0.687500 0.000000 1.000000"
+6 9589.944598 machine_state m14 jdyn!5
+5 jdyn!7 machine_state "dyn!7" "0.968750 1.000000 0.000000"
+6 9589.944643 machine_state m14 jdyn!7
+5 jdyn!8 machine_state "dyn!8" "0.000000 1.000000 0.718750"
+6 9589.944688 machine_state m14 jdyn!8
+6 9589.944697 machine_state m14 w
+
+# End of events, containers destruction
+3 9589.944713 m0 machine_ct
+3 9589.944713 m1 machine_ct
+3 9589.944713 m2 machine_ct
+3 9589.944713 m3 machine_ct
+3 9589.944713 m4 machine_ct
+3 9589.944713 m5 machine_ct
+3 9589.944713 m6 machine_ct
+3 9589.944713 m7 machine_ct
+3 9589.944713 m8 machine_ct
+3 9589.944713 m9 machine_ct
+3 9589.944713 m10 machine_ct
+3 9589.944713 m11 machine_ct
+3 9589.944713 m12 machine_ct
+3 9589.944713 m13 machine_ct
+3 9589.944713 m14 machine_ct
+3 9589.944713 root root_ct
